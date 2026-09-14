@@ -262,7 +262,7 @@
                 </form>
 
                 <p class="rsvp-deadline">
-                    💡 Please RSVP by <strong>September 15, 2026</strong>
+                    💡 Please RSVP by <strong>September 17, 2026</strong>
                 </p>
             @endif
         </div>
