@@ -4,25 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Rsvp;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class RsvpController extends Controller
 {
     public function index(Request $request)
     {
-        $ip = $request->ip();
-        $cacheKey = 'rsvp_ip_' . md5($ip);
-        $userRsvp = Cache::get($cacheKey);
+        // Check if THIS browser session has already submitted RSVP
+        $userRsvp = $request->session()->get('my_rsvp');
 
         return view('welcome', compact('userRsvp'));
     }
 
     public function store(Request $request)
     {
-        $ip = $request->ip();
-        $cacheKey = 'rsvp_ip_' . md5($ip);
-
-        if (Cache::has($cacheKey)) {
+        // If this session already submitted, redirect back
+        if ($request->session()->has('my_rsvp')) {
             return redirect('/')->with('info', 'You have already submitted your RSVP! 🎀');
         }
 
@@ -42,8 +38,8 @@ class RsvpController extends Controller
             'attending' => $rsvpData['attending'],
         ]);
 
-        // Cache permanently for this IP
-        Cache::forever($cacheKey, $rsvpData);
+        // Store in THIS user's session — other browsers are not affected
+        $request->session()->put('my_rsvp', $rsvpData);
 
         $message = $rsvpData['attending']
             ? "Yay! Can't wait to see you at the party, {$rsvpData['name']}! 🎉"
