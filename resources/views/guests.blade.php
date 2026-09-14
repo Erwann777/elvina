@@ -9,10 +9,7 @@
 </head>
 <body>
 
-<div class="floating-deco animate-drift" style="top:5%; left:3%; animation-duration:7s;">🎈</div>
-<div class="floating-deco animate-drift" style="top:8%; right:5%; animation-duration:9s; animation-delay:-3s;">🎀</div>
-<div class="floating-deco animate-sparkle" style="top:40%; left:2%; animation-duration:3s;">⭐</div>
-<div class="floating-deco animate-sparkle" style="top:60%; right:3%; animation-duration:2.5s; animation-delay:-1s;">💫</div>
+@include('partials.decorations')
 
 <div class="page-wrap">
     <div class="party-banner">
